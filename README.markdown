@@ -37,3 +37,21 @@ The name of the passage to open.
 
 ###attribute - name
 Names represent the name of the choice across passages and can have different link values and inside text.
+
+#Examples
+
+##Using explore to look around without consequences.
+```html
+<passage name="main">
+    It was a a <explore link="look-window">bright and sunny day.</explore>
+    We <explore link="open-door">open the door</explore> and walk outside.
+</passage>
+<passage name="look-window">
+    You see a bird in the sky. <explore link="main">Look back down.</explore>
+</passage>
+<passage name="open-door">
+    *Creak Creak* <explore link="walk-outside">Take a step outside.</explore>
+</passage>
+```
+
+...WIP
