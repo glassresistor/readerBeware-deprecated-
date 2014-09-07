@@ -1,6 +1,6 @@
 #readerBeware: WebComponents for Interactive Fiction
 
-I'm creating this as a side project to implement <passage> <choice>/<explore>(link is taken) and other interactive fiction primitives into a set of usable web components. The following is a WIP spec.
+I'm creating this as a side project to implement \<passage\> \<choice\>/\<explore\>(link is taken) and other interactive fiction primitives into a set of usable web components. The following is a WIP spec.
 
 
 #Block elements
