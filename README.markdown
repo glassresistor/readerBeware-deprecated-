@@ -18,6 +18,9 @@ Passage is the basic unit of readerBeware each page/event/interaction takes plac
 Used as an identifier within the book. A reserved name is 'main' and represents the passage that will be opened on start.  Each passage should have a unique name with all of its siblings(in html).  It is unclear(but interesting) to wonder what nested passages might imply.
 
 
+##passageScript
+Similar to the javascript `<script>` tag but runs when the passage loads.
+
 #Inline Elements for passages
 
 ##explore
