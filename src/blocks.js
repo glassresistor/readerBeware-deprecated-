@@ -24,6 +24,7 @@ exports.clickExplore = function(book, passage) {
 };
 
 exports.buildExplore = function(book, i, el) {
+  el = $(el);
   el.click(function() {
     var passage = book.passages[el.attr('link')];
     exports.clickExplore(book, passage);
@@ -48,22 +49,21 @@ exports.Passage = function(book, el) {
 
 exports.Book = function(el) {
   this.el = el;
-  this.name = el.attr('name');
+  this.name = $(this.el).attr('name');
   this.passages = {};
   this.state = {
     'history': [],
     'passages': {},
   };
-  el.children('passage').each(exports.buildPassage.bind(null, this));
-  el.children('explore').each(exports.buildExplore.bind(null, this));
+  $(this.el).children('passage').each(exports.buildPassage.bind(null, this));
+  $(this.el).children('explore').each(exports.buildExplore.bind(null, this));
 };
 
 
 exports.buildBooks = function() {
   window.books = {};
   $('book').each(function(i, el){
-    el = $(el);
-    var name = el.attr('name');
-    var book = window.books[name] = exports.Book(el);
+    var name = $(el).attr('name');
+    var book = window.books[name] = new exports.Book(el);
   });
 };

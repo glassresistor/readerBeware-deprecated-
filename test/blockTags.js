@@ -1,6 +1,6 @@
 var $ = require('jquery');
-var should = require('should');
 var blocks = require('../src/blocks');
+var should = require('chai').should();
 
 describe("block elements", function() {
   describe("book", function() {
@@ -11,10 +11,19 @@ describe("block elements", function() {
       $('body').html('');
       window.books = undefined;
     });
-    it("book initializes event binding for children", function() {
+    it("adds book to global books object", function() {
       blocks.buildBooks();
       should.exist(window.books);
-      window.books.should.have.property('MyBook', blocks.Book($('book[name="MyBook"]')[0]));
+      var bookObject = blocks.Book(el);
+      window.books.should.have.property('MyBook', bookObject);
+      var book = window.books.MyBook;
+      var el = $('book[name="MyBook"]')[0];
+      book.should.have.property('el', el);
+      var state = {
+        'history' : [],
+        'passages' : {}
+      };
+      book.should.have.property('state').and.eql(state);
     });
   });
 });
