@@ -1,5 +1,5 @@
 var $ = require('jquery');
-var Promise = require('polyfill'); //TODO: ADD setimmediate
+var Promise = require('promise-polyfill'); //TODO: ADD setimmediate
 var Serializer = require("mousse").Serializer;
 var lzstring = require('lz-string');
 
@@ -31,6 +31,7 @@ exports.buildExplore = function(book, i, el) {
 };
 
 exports.buildPassage = function(book, i, el) {
+  el = $(el);
   var name = el.attr('name');
   book.state.passages[name] = {};
   book.passages[name] = Passage(book, el);
@@ -61,7 +62,8 @@ exports.Book = function(el) {
 exports.buildBooks = function() {
   window.books = {};
   $('book').each(function(i, el){
-    var name = el.attr('name';
+    el = $(el);
+    var name = el.attr('name');
     var book = window.books[name] = exports.Book(el);
   });
 };
