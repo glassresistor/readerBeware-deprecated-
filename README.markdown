@@ -1,4 +1,6 @@
 #readerBeware: WebComponents for Interactive Fiction
+[![browser support](https://ci.testling.com/glassresistor/readerBeware.png)
+](https://ci.testling.com/glassresistor/readerBeware)
 
 I'm creating this as a side project to implement \<passage\> \<choice\>/\<explore\>(link is taken) and other interactive fiction primitives into a set of usable web components. The following is a WIP spec.
 
