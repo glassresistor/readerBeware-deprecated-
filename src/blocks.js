@@ -47,6 +47,7 @@ exports.Passage = function(book, el) {
 };
 
 
+/// "initBook"
 exports.Book = function(el) {
   this.el = el;
   this.name = $(this.el).attr('name');
@@ -60,6 +61,7 @@ exports.Book = function(el) {
 };
 
 
+/// "buildBooks"
 exports.buildBooks = function() {
   window.books = {};
   $('book').each(function(i, el){

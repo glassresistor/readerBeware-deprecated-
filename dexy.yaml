@@ -1,0 +1,7 @@
+docs/*.adoc|jinja|asciidoctor:
+    - src/*.js|idio|asciisyn:
+        - idio: { ext: .txt }
+    - samples/*.html:
+        - data-type: bs4
+    - docs/screenshots.js|casperjs:
+        - casperjs: { add-new-files: True }
