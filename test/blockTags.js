@@ -36,4 +36,8 @@ describe("block elements", function() {
       window.books['Two'].el.should.be.eql(bookTwo.get()[0]);
     });
   });
+  describe("passage", function() {
+
+  });
+
 });
