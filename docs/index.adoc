@@ -1,0 +1,42 @@
+= ReaderBeware Documentation
+:toc: right
+:toclevels: 5
+:source-highlighter: pygments
+
+{% set book1_passages = d['/samples/book1.html'].soup().find_all("passage") %}
+{% set book2_passages = d['/samples/book2.html'].soup().find_all("passage") %}
+
+{% macro passage_by_name(passages, name) -%}
+{% for passage in passages -%}
+{% if passage['name'] == name -%}
+[source,xml]
+{{ passage }}
+{% endif -%}
+{% endfor -%}
+{% endmacro -%}
+
+== Introduction
+
+Docs for ReaderBeware.
+
+Change something here.
+
+{{ d['/src/blocks.js|idio|asciisyn']['buildBooks'] }}
+
+{{ d['/src/blocks.js|idio|asciisyn']['initBook'] }}
+
+
+{{ passage_by_name(book1_passages, 'openDoor') }}
+
+[source,xml]
+{{ d['/samples/book1.html'].soup().find('explore', link="walk-outside") }}
+
+[source,xml]
+{{ d['/samples/book1.html']['book'] }}
+
+image::index.png[]
+
+Here is just the open door passage:
+
+image::opendoor.png[]
+
