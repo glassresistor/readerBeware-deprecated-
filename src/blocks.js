@@ -2,11 +2,11 @@ var $ = require('jquery');
 var Promise = require('promise-polyfill'); //TODO: ADD setimmediate
 var Serializer = require("mousse").Serializer;
 var lzstring = require('lz-string');
-
+var errors = require('./errors');
 
 exports.changeState = function(book, passage) {
   //Update Game State and change passage
-  book.el.children('passage').hide();
+  $(book.el).children('passage').hide();
   passage.el.show();
   book.state.history.push(passage.name);
   //Build hash and change url
@@ -15,8 +15,8 @@ exports.changeState = function(book, passage) {
   //This way the link contains all history and functions as a save game.
   var hash = new Serializer().serializeObject(book.state);
   hash = lzstring.compressToBase64(hash);
-  history.pushState(book, document.title,
-      '#' + book.attr('name') + '/' + hash);
+  history.pushState(0, document.title,
+      '#' + book.name + '/' + hash);
 };
 
 exports.clickExplore = function(book, passage) {
@@ -25,17 +25,22 @@ exports.clickExplore = function(book, passage) {
 
 exports.buildExplore = function(book, i, el) {
   el = $(el);
-  el.click(function() {
-    var passage = book.passages[el.attr('link')];
-    exports.clickExplore(book, passage);
-  });
+  var link = el.attr('link');
+  var passage = book.passages[link];
+  if (!passage) {
+    console.warn('missing package ' + link);
+  } else {
+    el.click(function() {
+      exports.clickExplore(book, passage);
+    });
+  }
 };
 
 exports.buildPassage = function(book, i, el) {
   el = $(el);
   var name = el.attr('name');
   book.state.passages[name] = {};
-  book.passages[name] = Passage(book, el);
+  book.passages[name] = new exports.Passage(book, el);
 };
 
 
@@ -57,7 +62,7 @@ exports.Book = function(el) {
     'passages': {},
   };
   $(this.el).children('passage').each(exports.buildPassage.bind(null, this));
-  $(this.el).children('explore').each(exports.buildExplore.bind(null, this));
+  $(this.el).find('explore').each(exports.buildExplore.bind(null, this));
 };
 
 
