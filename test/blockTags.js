@@ -1,12 +1,19 @@
 var $ = require('jquery');
 var blocks = require('../src/blocks');
 var should = require('chai').should();
+var sinon = require('sinon');
 
 describe("block elements", function() {
   describe("book", function() {
+    beforeEach(function() {
+      sinon.stub(blocks, 'buildPassage');
+      sinon.stub(blocks, 'buildExplore');
+    });
     afterEach(function() {
       $('body').html('');
       window.books = undefined;
+      blocks.buildPassage.restore();
+      blocks.buildExplore.restore();
     });
     it("adds book to global books object", function() {
       $('body').html('<book name="MyBook"></book>');
@@ -35,9 +42,16 @@ describe("block elements", function() {
       window.books['One'].el.should.be.eql(bookOne.get()[0]);
       window.books['Two'].el.should.be.eql(bookTwo.get()[0]);
     });
-  });
-  describe("passage", function() {
-
+    it("calls buildPassage", function() {
+      $('body').html('<book name="MyBook"><passage></passage></book>');
+      blocks.buildBooks();
+      blocks.buildPassage.calledOnce.should.be.true;
+    });
+    it("calls buildExplore", function() {
+      $('body').html('<book name="MyBook"><passage></passage></book>');
+      blocks.buildBooks();
+      blocks.buildPassage.calledOnce.should.be.true;
+    });
   });
 
 });
