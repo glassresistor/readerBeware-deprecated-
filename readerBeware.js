@@ -14906,12 +14906,42 @@ exports.clickExplore = function(book, passage) {
 exports.buildExplore = function(book, i, el) {
   el = $(el);
   var link = el.attr('link');
-  var passage = book.passages[link];
-  if (!passage) {
-    console.warn('missing package ' + link);
-  } else {
+  var passage = book.getPassage(link);
+  if (passage) {
     el.click(function() {
       exports.clickExplore(book, passage);
+    });
+  }
+};
+
+exports.clickChoice = function(book, passage, name, id, el) {
+  el = $(el);
+  if (!el.hasClass('notChosen')) {
+    exports.clickExplore(book, passage);
+    book.state.choices.append([book, name, id]); //whatever save data
+    el.addClass('chosenOne'); //highlander joke
+    var choices = book.contrib.choices[name];
+    choices.each(function(i, el) {
+      if(i != id) {
+        $(el).addClass('notChosen'); //no highlander joke
+      }
+    });
+  }
+};
+
+exports.buildChoice = function(book, i, el) {
+  el = $(el);
+  var passage = book.getPassage(el.attr('link'));
+  var id = el.attr('id');
+  var name = el.attr('name');
+  var choice = book.contrib.choices[name];
+  if (!choice) {
+    choice = {};
+  }
+  choice[id] = el;
+  if (passage) {
+    el.click(function() {
+      exports.clickChoice(book, passage, name, id, el);
     });
   }
 };
@@ -14924,6 +14954,7 @@ exports.buildPassage = function(book, i, el) {
 };
 
 
+/// "initPassage"
 exports.Passage = function(book, el) {
   this.book = book;
   this.name = el.attr('name');
@@ -14939,14 +14970,27 @@ exports.Book = function(el) {
   this.passages = {};
   this.state = {
     'history': [],
-    'passages': {},
+    'passages': {}
   };
+  this.contrib = {};
+  //FIXME: dear god make this something others can jack into.
   $(this.el).children('passage').each(exports.buildPassage.bind(null, this));
   $(this.el).find('explore').each(exports.buildExplore.bind(null, this));
+  this.contrib.choices = {};
+  this.state.choices = [];
+  $(this.el).find('choice').each(exports.buildChoice.bind(null, this));
+};
+
+exports.Book.prototype.getPassage = function(name) {
+  var passage = this.passages[name];
+  if (!passage) {
+    console.warn('missing passage ' + name);
+    return undefined;
+  }
+  return passage;
 };
 
 
-/// "buildBooks"
 exports.buildBooks = function() {
   window.books = {};
   $('book').each(function(i, el){
