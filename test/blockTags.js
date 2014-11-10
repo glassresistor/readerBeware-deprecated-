@@ -55,7 +55,7 @@ describe("block elements", function() {
       blocks.buildBooks();
       blocks.buildPassage.calledOnce.should.be.true;
     });
-    it("calls buildChoice", function(done) {
+    it("calls buildChoice", function() {
       $('body').html(
         '<book name="MyBook"><passage>'+
         '<choice name="cN" id="theOne" ></choice></passage></book>'
@@ -64,6 +64,7 @@ describe("block elements", function() {
       blocks.buildChoice.calledOnce.should.be.true;
       var book = window.books.MyBook;
       book.state.choices.should.be.eql([]);
+      //var el = $('choice').get()[0];
       //book.contrib.choices.should.be.eql(
       //    { 'cN': { 'theOne': el }});
     });

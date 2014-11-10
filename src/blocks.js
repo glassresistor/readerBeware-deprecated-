@@ -102,9 +102,12 @@ exports.Book = function(el) {
 };
 
 exports.Book.prototype.getPassage = function(name) {
+  var passage = this.passages[name];
   if (!passage) {
-    console.warn('missing package ' + link);
+    console.warn('missing passage ' + name);
+    return undefined;
   }
+  return passage;
 };
 
 
