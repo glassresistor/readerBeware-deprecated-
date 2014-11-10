@@ -26,7 +26,8 @@ describe("block elements", function() {
       book.should.have.property('el', el);
       var state = {
         'history' : [],
-        'passages' : {}
+        'passages' : {},
+        'choices': {}
       };
       book.should.have.property('state').and.eql(state);
     });

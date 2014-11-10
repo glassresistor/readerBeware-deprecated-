@@ -1,0 +1,13 @@
+{
+  "sauceLabs": true,
+  "hostname"  : "localhost",
+  "port"      : 4444,
+  "browsers"  : [{
+    "name"    : "internet explorer",
+    "version" : "9"
+  }, {
+    "name"    : "chrome"
+  }, {
+    "name"    : "firefox"
+  }]
+}
