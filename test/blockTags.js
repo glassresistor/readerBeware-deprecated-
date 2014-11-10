@@ -8,12 +8,14 @@ describe("block elements", function() {
     beforeEach(function() {
       sinon.stub(blocks, 'buildPassage');
       sinon.stub(blocks, 'buildExplore');
+      sinon.stub(blocks, 'buildChoice');
     });
     afterEach(function() {
       $('body').html('');
       window.books = undefined;
       blocks.buildPassage.restore();
       blocks.buildExplore.restore();
+      blocks.buildChoice.restore();
     });
     it("adds book to global books object", function() {
       $('body').html('<book name="MyBook"></book>');
@@ -27,7 +29,7 @@ describe("block elements", function() {
       var state = {
         'history' : [],
         'passages' : {},
-        'choices': {}
+        'choices': []
       };
       book.should.have.property('state').and.eql(state);
     });
@@ -53,6 +55,17 @@ describe("block elements", function() {
       blocks.buildBooks();
       blocks.buildPassage.calledOnce.should.be.true;
     });
+    it("calls buildChoice", function(done) {
+      $('body').html(
+        '<book name="MyBook"><passage>'+
+        '<choice name="cN" id="theOne" ></choice></passage></book>'
+      );
+      blocks.buildBooks();
+      blocks.buildChoice.calledOnce.should.be.true;
+      var book = window.books.MyBook;
+      book.state.choices.should.be.eql([]);
+      //book.contrib.choices.should.be.eql(
+      //    { 'cN': { 'theOne': el }});
+    });
   });
-
 });

@@ -90,15 +90,14 @@ exports.Book = function(el) {
   this.passages = {};
   this.state = {
     'history': [],
-    'passages': {},
-    'choices': {}
+    'passages': {}
   };
   this.contrib = {};
   //FIXME: dear god make this something others can jack into.
   $(this.el).children('passage').each(exports.buildPassage.bind(null, this));
   $(this.el).find('explore').each(exports.buildExplore.bind(null, this));
   this.contrib.choices = {};
-  this.state.choices = {};
+  this.state.choices = [];
   $(this.el).find('choice').each(exports.buildChoice.bind(null, this));
 };
 
