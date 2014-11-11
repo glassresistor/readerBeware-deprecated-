@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <title>readerBeware</title>
-  <link rel="stylesheet" href="css/readerBeware.css">
-  <script src="readerBeware.js"></script>
+  <link rel="stylesheet" href="css/reader-beware.css">
+  <script src="reader-beware.js"></script>
   <script>
     window.readerBeware.start();
   </script></head>
@@ -18,7 +18,10 @@
       You see a bird in the sky. <explore link="main">Look back down.</explore>
   </passage>
   <passage name="openDoor">
-      *Creak Creak* <explore link="walkOutside">Take a step outside.</explore>
+      <p>*Creak Creak* <choice id="goForIt" name="beBrave" link="walkOutside">Take a step outside.</choice></p>
+      <p><choice id="runBack" name="beBrave" link="main">Turn around go back inside!</choice></p>
+  </passage>
+  <passage name="walkOutside">
   </passage>
 </book>
 </body>
