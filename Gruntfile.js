@@ -43,7 +43,7 @@ module.exports = function (grunt) {
       options: { banner: '<%= banner %>' },
       dist: {
         src: 'build/<%= pkg.name %>.js',
-        dest: 'build/<%s= pkg.name %>.min.js'
+        dest: 'build/reader-beware.min.js'
       }
     },
     shell: {
