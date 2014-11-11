@@ -1,6 +1,7 @@
 passage:not([name="main"]) {
   display: none;
 }
-explore {
+explore,
+choice {
   font-weight: bold;
 }
