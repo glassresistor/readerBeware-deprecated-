@@ -9,6 +9,7 @@
     window.readerBeware.start();
   </script></head>
 <body>
+  <h2>Here is an example of a simple setup with only once choice.  See what happens if you turn back around.</h2>
 <book name="theSimpleExplorer">
   <passage name="main">
       It was a a <explore link="lookWindow">bright and sunny day.</explore>
@@ -23,6 +24,43 @@
   </passage>
   <passage name="walkOutside">
   OMG The outside is so wonderful!
+  </passage>
+</book>
+
+<h2>Here is a more complex and fun example</h2>
+<book name="theSlightlyLessSimpleExplorer">
+  <passage name="main">
+      <p>Sally passes you a note: "Its your birthday what should we do today?"</p>
+      <p><choice id="fbAngel" name="first-blood" link="angel">[ ]Rebuild the economy</choice></p>
+      <p><choice id="fbPrag" name="first-blood" link="pragmetism">[ ]Kidnap The President</choice></p>
+      <p>
+          <strong>WOAH WOAH</strong>
+          <em><explore link="look-around">lets take a breath!</explore></em>
+      </p>
+  </passage>
+  <passage name="angel">
+      You and Sally join the young idustrialists club and rebuild Galt's great machine.
+  </passage>
+  <passage name="pragmetism">
+      <p><em>Cops flood in</em></p>
+      <p><em>Sally pulls out her badge proudly moves behind them</em></p>
+      <p>Sally: <explore link="jail">Take their terrorist butt to jail boys!</explore></p>
+  </passage>
+  <passage name="look-around">
+      <p>You step outside to catch your breath too much is happening now.
+      You go out to call you friend Finn but nothing gets through.</p>
+      <p>Thats when you see the SWAT bus and now its a trap!</p>
+      <p>Do you <choice id="fbF" name="first-blood" link="fire">light the building on fire with
+      Sally in it</choice> or <choice id="fbR" name="first-blood" link="run">just cut the tires
+      and make a run for it.</choice></p>
+  </passage>
+  <passage name="fire">
+      You watch the fires engulf the night and remember this is what snitches get.
+  </passage>
+  <passage name="run">
+      <em>POP HISSSSSS</em>
+      <p>Nothing more satifying than a clean get away but you can't help but feel
+      burned.  Meeting an undercover via OKC! Thats a story for the books.</p>
   </passage>
 </book>
 </body>

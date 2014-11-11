@@ -5,3 +5,11 @@ explore,
 choice {
   font-weight: bold;
 }
+
+book {
+  display: block;
+  width: 80%;
+  height: 80%;
+  background-color: #111;
+  color: #fff;
+}
