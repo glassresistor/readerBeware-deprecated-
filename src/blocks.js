@@ -13,6 +13,7 @@ exports.changeState = function(book, passage) {
   //We have to maintain and serialize the history.  Normal back will cause
   //speedrun like behaviour not go backwards like we want.
   //This way the link contains all history and functions as a save game.
+  console.log(book.state);
   var hash = new Serializer().serializeObject(book.state);
   hash = lzstring.compressToBase64(hash);
   history.pushState(0, document.title,
@@ -38,10 +39,10 @@ exports.clickChoice = function(book, passage, name, id, el) {
   el = $(el);
   if (!el.hasClass('notChosen')) {
     exports.clickExplore(book, passage);
-    book.state.choices.append([book, name, id]); //whatever save data
+    book.state.choices.push([book.name, passage.name, name, id])//whatever save data
     el.addClass('chosenOne'); //highlander joke
     var choices = book.contrib.choices[name];
-    choices.each(function(i, el) {
+    Object.forEach(choices, function(el, i) {
       if(i != id) {
         $(el).addClass('notChosen'); //no highlander joke
       }
@@ -50,17 +51,17 @@ exports.clickChoice = function(book, passage, name, id, el) {
 };
 
 exports.buildChoice = function(book, i, el) {
-  el = $(el);
-  var passage = book.getPassage(el.attr('link'));
-  var id = el.attr('id');
-  var name = el.attr('name');
+  var $el = $(el);
+  var passage = book.getPassage($el.attr('link'));
+  var id = $el.attr('id');
+  var name = $el.attr('name');
   var choice = book.contrib.choices[name];
   if (!choice) {
-    choice = {};
+    choice = book.contrib.choices[name] = {};
   }
   choice[id] = el;
   if (passage) {
-    el.click(function() {
+    $el.click(function() {
       exports.clickChoice(book, passage, name, id, el);
     });
   }

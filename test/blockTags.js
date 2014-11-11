@@ -57,16 +57,28 @@ describe("block elements", function() {
     });
     it("calls buildChoice", function() {
       $('body').html(
-        '<book name="MyBook"><passage>'+
-        '<choice name="cN" id="theOne" ></choice></passage></book>'
+        '<book name="MyBook"><passage><choice name="cN" id="theOne" ></choice></passage></book>'
       );
       blocks.buildBooks();
       blocks.buildChoice.calledOnce.should.be.true;
       var book = window.books.MyBook;
       book.state.choices.should.be.eql([]);
-      //var el = $('choice').get()[0];
-      //book.contrib.choices.should.be.eql(
-      //    { 'cN': { 'theOne': el }});
     });
   });
 });
+describe("buildChoice", function() {
+  afterEach(function() {
+    $('body').html('');
+    window.books = undefined;
+  });
+  it('adds choice to contrib object', function() {
+    $('body').html(
+        '<book name="MyBook"><passage><choice name="cN" id="theOne" ></choice></passage></book>'
+    );
+    blocks.buildBooks();
+    var book = window.books.MyBook;
+    var el = $('choice').get()[0];
+    book.contrib.choices.should.be.eql({ 'cN': { 'theOne': el }});
+  });
+});
+
