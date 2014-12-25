@@ -48,7 +48,7 @@ module.exports = function (grunt) {
     },
     shell: {
       mochify: {
-        command: 'node_modules/.bin/mochify --reporter spec'
+        command: 'nodejs testRunner.js'
       }
     },
     jshint: {

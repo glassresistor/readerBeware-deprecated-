@@ -33,7 +33,8 @@
     "lodash": "~2.4.1",
     "lz-string": "~1.3.3",
     "mocha": "~1.20.1",
-    "mochify": "~1.7.0",
+    "mochify": "~2.1.0",
+    "mochify-istanbul": "~2.1.1",
     "phantomjs": "~1.9.7-8",
     "sinon": "~1.11.1"
   },
