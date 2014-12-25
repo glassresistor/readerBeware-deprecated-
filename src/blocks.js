@@ -1,71 +1,8 @@
 var $ = require('jquery');
 var Promise = require('promise-polyfill'); //TODO: ADD setimmediate
-var Serializer = require("mousse").Serializer;
-var lzstring = require('lz-string');
 var errors = require('./errors');
+var inline = require('./inline');
 
-exports.changeState = function(book, passage) {
-  //Update Game State and change passage
-  $(book.el).children('passage').hide();
-  passage.el.show();
-  book.state.history.push(passage.name);
-  //Build hash and change url
-  //We have to maintain and serialize the history.  Normal back will cause
-  //speedrun like behaviour not go backwards like we want.
-  //This way the link contains all history and functions as a save game.
-  console.log(book.state);
-  var hash = new Serializer().serializeObject(book.state);
-  hash = lzstring.compressToBase64(hash);
-  history.pushState(0, document.title,
-      '#' + book.name + '/' + hash);
-};
-
-exports.clickExplore = function(book, passage) {
-  exports.changeState(book, passage);
-};
-
-exports.buildExplore = function(book, i, el) {
-  el = $(el);
-  var link = el.attr('link');
-  var passage = book.getPassage(link);
-  if (passage) {
-    el.click(function() {
-      exports.clickExplore(book, passage);
-    });
-  }
-};
-
-exports.clickChoice = function(book, passage, name, id, el) {
-  el = $(el);
-  if (!el.hasClass('notChosen')) {
-    exports.clickExplore(book, passage);
-    book.state.choices.push([book.name, passage.name, name, id])//whatever save data
-    el.addClass('chosenOne'); //highlander joke
-    var choices = book.contrib.choices[name];
-    Object.forEach(choices, function(el, i) {
-      if(i != id) {
-        $(el).addClass('notChosen'); //no highlander joke
-      }
-    });
-  }
-};
-
-exports.buildChoice = function(book, i, el) {
-  var $el = $(el);
-  var passage = book.getPassage($el.attr('link'));
-  var id = $el.attr('id');
-  var name = $el.attr('name');
-  var choice = book.contrib.choices[name];
-  if (!choice) {
-    choice = book.contrib.choices[name] = {};
-  }
-  choice[id] = el;
-  if (passage) {
-    $el.click(function() {
-      exports.clickChoice(book, passage, name, id, el);
-    });
-  }
-};
 
 exports.buildPassage = function(book, i, el) {
   el = $(el);
@@ -74,6 +11,14 @@ exports.buildPassage = function(book, i, el) {
   book.passages[name] = new exports.Passage(book, el);
 };
 
+
+exports.buildBooks = function() {
+  window.books = {};
+  $('book').each(function(i, el){
+    var name = $(el).attr('name');
+    var book = window.books[name] = new exports.Book(el);
+  });
+};
 
 /// "initPassage"
 exports.Passage = function(book, el) {
@@ -96,10 +41,10 @@ exports.Book = function(el) {
   this.contrib = {};
   //FIXME: dear god make this something others can jack into.
   $(this.el).children('passage').each(exports.buildPassage.bind(null, this));
-  $(this.el).find('explore').each(exports.buildExplore.bind(null, this));
+  $(this.el).find('explore').each(inline.buildExplore.bind(null, this));
   this.contrib.choices = {};
   this.state.choices = [];
-  $(this.el).find('choice').each(exports.buildChoice.bind(null, this));
+  $(this.el).find('choice').each(inline.buildChoice.bind(null, this));
 };
 
 exports.Book.prototype.getPassage = function(name) {
@@ -111,11 +56,3 @@ exports.Book.prototype.getPassage = function(name) {
   return passage;
 };
 
-
-exports.buildBooks = function() {
-  window.books = {};
-  $('book').each(function(i, el){
-    var name = $(el).attr('name');
-    var book = window.books[name] = new exports.Book(el);
-  });
-};

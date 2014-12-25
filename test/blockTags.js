@@ -1,5 +1,6 @@
 var $ = require('jquery');
 var blocks = require('../src/blocks');
+var inline = require('../src/inline');
 var should = require('chai').should();
 var sinon = require('sinon');
 
@@ -7,15 +8,15 @@ describe("block elements", function() {
   describe("book", function() {
     beforeEach(function() {
       sinon.stub(blocks, 'buildPassage');
-      sinon.stub(blocks, 'buildExplore');
-      sinon.stub(blocks, 'buildChoice');
+      sinon.stub(inline, 'buildExplore');
+      sinon.stub(inline, 'buildChoice');
     });
     afterEach(function() {
       $('body').html('');
       window.books = undefined;
       blocks.buildPassage.restore();
-      blocks.buildExplore.restore();
-      blocks.buildChoice.restore();
+      inline.buildExplore.restore();
+      inline.buildChoice.restore();
     });
     it("adds book to global books object", function() {
       $('body').html('<book name="MyBook"></book>');
@@ -60,25 +61,11 @@ describe("block elements", function() {
         '<book name="MyBook"><passage><choice name="cN" id="theOne" ></choice></passage></book>'
       );
       blocks.buildBooks();
-      blocks.buildChoice.calledOnce.should.be.true;
+      inline.buildChoice.calledOnce.should.be.true;
       var book = window.books.MyBook;
       book.state.choices.should.be.eql([]);
     });
   });
 });
-describe("buildChoice", function() {
-  afterEach(function() {
-    $('body').html('');
-    window.books = undefined;
-  });
-  it('adds choice to contrib object', function() {
-    $('body').html(
-        '<book name="MyBook"><passage><choice name="cN" id="theOne" ></choice></passage></book>'
-    );
-    blocks.buildBooks();
-    var book = window.books.MyBook;
-    var el = $('choice').get()[0];
-    book.contrib.choices.should.be.eql({ 'cN': { 'theOne': el }});
-  });
-});
+
 
