@@ -1,51 +1,49 @@
-#readerBeware: WebComponents for Interactive Fiction
-[![browser support](https://ci.testling.com/glassresistor/readerBeware.png)
-](https://ci.testling.com/glassresistor/readerBeware)
+# readerBeware: WebComponents for Interactive Fiction
 
 I'm creating this as a side project to implement \<passage\> \<choice\>/\<explore\>(link is taken) and other interactive fiction primitives into a set of usable web components. The following is a WIP spec.
 
 
-#Block elements
+# Block elements
 
-##book
+## book
 Represents the top level object for a piece of IF all passages and chapter names should be unique to all children.
 
-##chapter
+## chapter
 Is a collection of passages that can link to each other and contain a cohesive storyline.  Chapters are linear until I work out an idea to improve them.  Should be used for serial IF where chapters do not affect each other.
 
-##passage
+## passage
 Passage is the basic unit of readerBeware each page/event/interaction takes place within a passage.
 
-###attribute - name
+### attribute - name
 Used as an identifier within the book. A reserved name is 'main' and represents the passage that will be opened on start.  Each passage should have a unique name with all of its siblings(in html).  It is unclear(but interesting) to wonder what nested passages might imply.
 
 
-##passageScript
+## passageScript
 Similar to the javascript `<script>` tag but runs when the passage loads.
 
-#Inline Elements for passages
+# Inline Elements for passages
 
-##explore
+## explore
 Is in short a link between passages.  Clicking/selecting text/html inside of an explore tag will change the selected passage from the current one to the one referenced but don't not affect global context.
 
-###atrribute - link
+### atrribute - link
 The name of the passage to open.
 
-###attribute - name
+### attribute - name
 Used to identify the explore tag but has no meaning within readerBeware.
 
-##choice
+## choice
 Is similar to explore but when a choice but any choices that shares the same name can only be clicked once and in the future all the others are greyed out or hidden.
 
-###atrribute - link
+### atrribute - link
 The name of the passage to open.
 
-###attribute - name
+### attribute - name
 Names represent the name of the choice across passages and can have different link values and inside text.
 
-#Examples
+# Examples
 
-##Using explore to look around without consequences.
+## Using explore to look around without consequences.
 ```html
 <passage name="main">
     It was a a <explore link="look-window">bright and sunny day.</explore>
@@ -59,7 +57,7 @@ Names represent the name of the choice across passages and can have different li
 </passage>
 ```
 
-##Using choice to make important immutable decisions.
+## Using choice to make important immutable decisions.
 ```html
 <passage name="main">
     <p>Sally passes you a note: "Its your birthday what should we do today?"</p>
